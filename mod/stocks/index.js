@@ -1,8 +1,10 @@
+// mod/stocks/index.js
+// ===================
 
 
 const express = require('express');
 const router = express.Router();
-const h_qr = require('./handlers/qrLabels');
+const {h_qr} = require('./dependencies');
 
 router.get('/:list/labels.pdf', h_qr);
 router.get('/:list/:uuid', h_item);

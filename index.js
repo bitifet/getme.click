@@ -1,10 +1,11 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const {router: authRouter} = require('./auth');
+
+const {router: authRouter} = require('./mod/auth');
 
 
-const stocks = require('./stocks');
+const stocks = require('./mod/stocks');
 
 const app = express();
 
