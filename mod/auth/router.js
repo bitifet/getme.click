@@ -1,13 +1,13 @@
 
 
-const express = require('express');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+import express from 'express';
+import passport from 'passport';
+import {Strategy as LocalStrategy} from 'passport-local';
+
+import {signup, authenticate} from './users.js';
 
 const router = express.Router();
-
-const {signup, authenticate} = require('./users');
-
+export default router ;
 
 // Passport local strategy
 passport.use(new LocalStrategy(
@@ -113,9 +113,6 @@ async function inlineLoginMiddleware(req, res, next) {
 };
 
 
-
-
-
 // Logout handler
 function logoutHandler (req, res) {
   req.logout((err) => {
@@ -126,7 +123,3 @@ function logoutHandler (req, res) {
 };
 
 
-
-
-
-module.exports = router;

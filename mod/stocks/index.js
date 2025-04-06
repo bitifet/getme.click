@@ -1,10 +1,8 @@
-// mod/stocks/index.js
-// ===================
 
+import express from 'express';
+import { h_qr } from './dependencies.js';
 
-const express = require('express');
-const router = express.Router();
-const {h_qr} = require('./dependencies');
+export const router = express.Router();
 
 router.get('/:list/labels.pdf', h_qr);
 router.get('/:list/:uuid', h_item);
@@ -34,5 +32,3 @@ function h_item(req, res) {
     res.send(`Item requested: ${user}/${list}/${uuid}`);
 };
 
-
-module.exports = router;

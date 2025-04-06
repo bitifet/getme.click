@@ -1,6 +1,4 @@
 
-const h_qr = require('../../lib/handlers/qrLabels');
+import h_qr from '../../lib/handlers/qrLabels/index.js';
 
-module.exports = {
-    h_qr,
-};
+export { h_qr };

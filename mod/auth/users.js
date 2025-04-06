@@ -1,11 +1,11 @@
 
-const bcrypt = require('bcrypt');
-const {randomUUID} = require('crypto');
+import bcrypt from 'bcrypt';
+import {randomUUID} from 'crypto';
 
 // Mock database (replace with real DB later)
 const users = [];
 
-async function signup( username, password, password_confirm ) {
+export async function signup( username, password, password_confirm ) {
   if (users.find(u => u.username === user)) throw new Error('User already exists');
   if (password !== password_confirm) throw new Error('Password mismatch');
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -14,7 +14,7 @@ async function signup( username, password, password_confirm ) {
   return user;
 };
 
-async function authenticate(user, password) {
+export async function authenticate(user, password) {
     const foundUser = users.find(u => u.username === user);
     if (!foundUser) {
         return false;
@@ -25,9 +25,4 @@ async function authenticate(user, password) {
     );
 };
 
-
-module.exports = {
-    signup,
-    authenticate,
-};
 

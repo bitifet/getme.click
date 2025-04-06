@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Getme stock management",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^5.1.0",

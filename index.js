@@ -1,11 +1,11 @@
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
 
-const {router: authRouter} = require('./mod/auth');
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
 
+import {router as authRouter} from './mod/auth/index.js';
 
-const stocks = require('./mod/stocks');
+import {router as stocksRouter} from './mod/stocks/index.js';
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.use(authRouter);
 
 
-app.use('/stocks', stocks);
+app.use('/stocks', stocksRouter);
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
