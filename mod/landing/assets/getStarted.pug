@@ -1,0 +1,95 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Getting Started — getme.click
+    style.
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #fff;
+        color: #111;
+        line-height: 1.6;
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p.subtitle {
+        color: #555;
+        font-size: 1.1rem;
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #333;
+      }
+
+      a.button {
+        display: inline-block;
+        background-color: #00c896;
+        color: white;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+        border-radius: 0.4rem;
+        margin-top: 1rem;
+      }
+
+      a.button:hover {
+        background-color: #00a77c;
+      }
+
+      footer {
+        margin-top: 4rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+  body
+    header
+      h1 Getting Started
+      p.subtitle Your shortcut to simplicity starts here.
+
+    section
+      h2 Step 1: Sign Up or Connect
+      p Start by creating an account or connecting with an existing one. It only takes a few clicks — no complex forms or lengthy onboarding.
+      a.button(href="#") Create an Account
+
+    section
+      h2 Step 2: Customize Your Experience
+      p Whether you're setting up personal preferences or configuring integrations, we make it easy with intuitive defaults and guided options.
+
+    section
+      h2 Step 3: Get Going
+      p That’s it! You’re ready to start using getme.click to make life a little bit easier.
+
+    footer
+      | &copy; #{new Date().getFullYear()} getme.click
+
