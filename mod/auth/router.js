@@ -2,12 +2,27 @@
 
 import express from 'express';
 import passport from 'passport';
+
+import session from 'express-session';
+
+
+
 import {Strategy as LocalStrategy} from 'passport-local';
 
 import {signup, authenticate} from './users.js';
 
 const router = express.Router();
 export default router ;
+
+// Required middleware for authentication
+router.use(express.urlencoded({ extended: true }));
+router.use(session({ secret: 'your-secret', resave: false, saveUninitialized: false }));
+router.use(passport.initialize());
+router.use(passport.session());
+
+
+
+
 
 // Passport local strategy
 passport.use(new LocalStrategy(
