@@ -5,13 +5,14 @@ import passport from 'passport';
 
 import session from 'express-session';
 
+import {appRouter} from './dependencies.js';
 
 
 import {Strategy as LocalStrategy} from 'passport-local';
 
 import {signup, authenticate} from './users.js';
 
-export const router = express.Router();
+export const router = appRouter(import.meta.dirname);
 
 // Required middleware for authentication
 router.use(express.urlencoded({ extended: true }));

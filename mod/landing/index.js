@@ -2,7 +2,10 @@
 
 import express from 'express';
 
-const router = express.Router();
+import {appRouter} from './dependencies.js';
+
+const router = appRouter(import.meta.dirname);
+
 export {router};
 
 const routes = [
