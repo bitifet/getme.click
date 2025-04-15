@@ -17,40 +17,77 @@ html(lang="en")
         color: #111;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         min-height: 100vh;
         padding: 2rem;
         text-align: center;
       }
 
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .title-row a.icon-link {
+        text-decoration: none;
+        font-size: 1.5rem;
+        color: #00c896;
+        transition: transform 0.2s ease;
+      }
+
+      .title-row a.icon-link:hover {
+        transform: scale(1.2);
+      }
+
       h1 {
         font-size: 3rem;
-        margin-bottom: 1rem;
       }
 
       p {
         font-size: 1.25rem;
         color: #555;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
       }
 
-      a.button {
-        display: inline-block;
-        background-color: #00c896;
-        color: white;
-        text-decoration: none;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.2rem;
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .grid a {
+        background-color: #f5f5f5;
+        padding: 1.2rem;
         border-radius: 0.5rem;
-        transition: background-color 0.3s ease;
+        text-decoration: none;
+        color: #111;
+        font-weight: 500;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        transition: background-color 0.2s ease, transform 0.2s ease;
       }
 
-      a.button:hover {
-        background-color: #00a77c;
+      .grid a:hover {
+        background-color: #e6f8f3;
+        transform: translateY(-3px);
       }
+
   body
-    h1 getme.click
+    .title-row
+      a.icon-link(href="/getting-started", title="Getting Started") 🚀
+      h1 getme.click
+
     p Because things should be easier.
-    a.button(href="./getStarted") Get Started
+
+    .grid
+      a(href="/stocks") 🛒 Manage Stocks
+      a(href="/tools/url-shortener") 🔗 URL Shortener
+      a(href="/tools/text-cleaner") 🧹 Text Cleaner
+      a(href="/tools/json-prettifier") 📄 JSON Prettifier
+      a(href="/tools/image-compressor") 🗜️ Image Compressor
+      a(href="/tools/unit-converter") 📏 Unit Converter
+      a(href="/tools/timezone-helper") 🌍 Timezone Helper
 

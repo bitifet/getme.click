@@ -7,7 +7,7 @@ export {router};
 
 const routes = [
     ['/', 'landing'],
-    ['/getStarted', 'getStarted'],
+    ['/getting-started', 'getStarted'],
 ]
 
 
