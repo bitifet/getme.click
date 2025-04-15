@@ -11,17 +11,13 @@ import {Strategy as LocalStrategy} from 'passport-local';
 
 import {signup, authenticate} from './users.js';
 
-const router = express.Router();
-export default router ;
+export const router = express.Router();
 
 // Required middleware for authentication
 router.use(express.urlencoded({ extended: true }));
 router.use(session({ secret: 'your-secret', resave: false, saveUninitialized: false }));
 router.use(passport.initialize());
 router.use(passport.session());
-
-
-
 
 
 // Passport local strategy
@@ -41,7 +37,6 @@ const usersCache = new Map();
 // Serialize/deserialize user (required for sessions)
 passport.serializeUser((user, done) => {
     // Store user ID in session
-    console.log(user);
     usersCache.set(user.id, user);
     done(null, user.id);
 });
@@ -53,78 +48,43 @@ passport.deserializeUser((id, done) => {
 
 
 // Routes
-router.use(inlineLoginMiddleware); // Protect all routes below this middleware
 router.get('/logout', logoutHandler);
 
 
 
 // Inline login middleware
-async function inlineLoginMiddleware(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
+export async function requireAuthentication(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    };
 
-  if (req.method === 'GET') {
-    return res.send(`
-      <h1>Login</h1>
-      <form method="post" action="${req.originalUrl}">
-        <p>
-            <input type="hidden" name="mode" value="login"/>
-        </p>
-        <p>
-            <label>User name: <input type="text" name="username" placeholder="Username"/></label>
-        </p>
-        <p>
-            <label>Passowrd: <input type="password" name="password" placeholder="Password"/></label>
-        </p>
-        <p>
-            <button type="submit">Login</button>
-        </p>
-      </form>
-      <h1>Sign Up</h1>
-      <form method="post" action="${req.originalUrl}">
-        <p>
-            <input type="hidden" name="mode" value="signup" />
-        </p>
-        <p>
-            <label>User name: <input type="text" name="username"/></label>
-        </p>
-        <p>
-            <label>Passowrd: <input type="password" name="password"/></label>
-        </p>
-        <p>
-            <label>Confirm Passowrd: <input type="password" name="password_confirm"/></label>
-        </p>
-        <p>
-            <button type="submit">Sign Up</button>
-        </p>
-      </form>
-    `);
-  }
+    if (req.method === 'GET') {
+        return res.render('../../auth/assets/log_or_sign_in', { originalUrl: req.originalUrl });
+    };
 
-  // If POST and mode is signup, try signup
-  if (req.body.mode === 'signup') {
-      const { username, password, password_confirm } = req.body;
-      try {
-          await signup(username, password, password_confirm);
-      } catch (err) {
-          return res.status(401).send(`${err.message}. <a href="">Try again</a>`);
-      }
-  };
+    // If POST and mode is signup, try signup
+    if (req.body?.mode === 'signup') {
+        const { username, password, password_confirm } = req.body;
+        try {
+            await signup(username, password, password_confirm);
+        } catch (err) {
+            return res.status(401).send(`${err.message}. <a href="">Try again</a>`);
+        }
+    };
 
-  // If POST and not logged in, try login
-  passport.authenticate('local', (err, user, info) => {
-      if (err) return next(err);
-      if (!user) {
-          return res.status(401).send('Login failed. <a href="">Try again</a>');
-      }
+    // If POST and not logged in, try login
+    passport.authenticate('local', (err, user, info) => {
+        if (err) return next(err);
+        if (!user) {
+            return res.status(401).send('Login failed. <a href="">Try again</a>');
+        }
 
-      req.logIn(user, (err) => {
-          if (err) return next(err);
-          //return next(); // Auth success, continue
-          res.redirect(req.originalUrl); // Force GET method
-      });
-  })(req, res, next);
+        req.logIn(user, (err) => {
+            if (err) return next(err);
+            //return next(); // Auth success, continue
+            res.redirect(req.originalUrl); // Force GET method
+        });
+    })(req, res, next);
 };
 
 

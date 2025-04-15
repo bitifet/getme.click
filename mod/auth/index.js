@@ -1,6 +1,7 @@
 
 
-import router from "./router.js";
+import { router, requireAuthentication } from "./router.js";
 
 export { router };
+export { requireAuthentication };
 
