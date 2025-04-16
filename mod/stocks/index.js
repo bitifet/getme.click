@@ -1,12 +1,12 @@
 
 import express from 'express';
-import { h_qr } from './dependencies.js';
+import { h_qr, requireAuthentication } from './dependencies.js';
 
 export const router = express.Router();
 
-router.get('/:list/labels.pdf', h_qr);
-router.get('/:list/:uuid', h_item);
-router.get('/:list', h_list);
+router.all('/:list/labels.pdf', requireAuthentication, h_qr);
+router.all('/:list/:uuid', requireAuthentication, h_item);
+router.all('/:list', requireAuthentication, h_list);
 router.get('/', h_index);
 
 function h_index(req, res) {
