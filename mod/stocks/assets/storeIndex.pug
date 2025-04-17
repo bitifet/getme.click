@@ -1,0 +1,9 @@
+extends /layout.pug
+
+block append content
+    h1 Store #{store}
+    a(href=`./`) ⬆️ Back to stores
+    ul
+        each item in items
+            li
+                a(href=`./${store}/${item}`) #{item}

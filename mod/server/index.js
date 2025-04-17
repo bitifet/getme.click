@@ -16,6 +16,9 @@ app.use(applyAssetsPath);
 app.use(authRouter);
 app.use(mainRouter);
 
+
+
+
 app.listen(3000, () => {
     console.log('Server running on port 3000');
 });
@@ -60,14 +63,15 @@ function setAssetsPath(assetsPath) {
 
 function applyAssetsPath(req, res, next) {
     const render = res.render.bind(res);
-    res.render = function(view, ...rest) {
+    res.render = function(view, model, ...rest) {
+        model.basedir = res.app.get('views');
         if (
             ! view.startsWith("/")
             && !! this.assetsPath
         ) {
             view = path.normalize(this.assetsPath + '/' + view);
         }
-        return render(view, ...rest);
+        return render(view, model, ...rest);
     }
     next();
 }

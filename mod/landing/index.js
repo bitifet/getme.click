@@ -16,7 +16,8 @@ const routes = [
 
 routes.forEach(([path, view, locals = {}]) => {
 	router.get(path, (req, res) => {
-        res.render(view, locals);
+        const { user } = req;
+        res.render(view, {user, ...locals});
     });
 });
 
