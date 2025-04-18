@@ -83,8 +83,8 @@ export async function requireAuthentication(req, res, next) {
     if (req.method === 'GET') {
         const Referer = req.get('Referer');
         const {originalUrl} = req;
-        const returnPath = (
-            originalUrl === '/login' ? `/login?referer=${encodeURIComponent(Referer || "")}`
+        const returnPath = '/login?referer=' + encodeURIComponent(
+            originalUrl === '/login' ? (Referer || "")
             : originalUrl
         );
         return res.render('../../auth/assets/log_or_sign_in', { returnPath });

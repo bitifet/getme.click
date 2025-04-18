@@ -23,9 +23,9 @@ import { h_qr, requireAuthentication, appRouter } from './dependencies.js';
 
 export const router = appRouter(import.meta.dirname);
 
-router.all('/:store/labels.pdf', requireAuthentication, h_qr);
-router.all('/:store/:uuid', requireAuthentication, h_item);
-router.all('/:store', requireAuthentication, h_list);
+router.get('/:store/labels.pdf', h_qr);
+router.get('/:store/:uuid', requireAuthentication, h_item);
+router.get('/:store', requireAuthentication, h_list);
 router.get('/', h_index);
 
 function h_index(req, res) {
