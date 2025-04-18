@@ -2,29 +2,7 @@ extends /layout.pug
 
 block append styles
     style.
-        .title-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .title-row a.icon-link {
-            text-decoration: none;
-            font-size: 1.5rem;
-            color: #00c896;
-            transition: transform 0.2s ease;
-        }
-
-        .title-row a.icon-link:hover {
-            transform: scale(1.2);
-        }
-
-        h1 {
-            font-size: 3rem;
-        }
-
-        p {
+        .subtitle {
             font-size: 1.25rem;
             color: #555;
             margin-bottom: 2.5rem;
@@ -54,13 +32,10 @@ block append styles
             transform: translateY(-3px);
         }
 
+block subtitle
+    p.subtitle Because things should be easier.
+
 block content
-    .title-row
-        a.icon-link(href="/getting-started", title="Getting Started") 🚀
-        h1 getme.click
-
-    p Because things should be easier.
-
     .grid
         a(href="/stocks") 🛒 Manage Stocks
         a(href="/tools/url-shortener") 🔗 URL Shortener
