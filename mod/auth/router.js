@@ -49,18 +49,25 @@ passport.deserializeUser((id, done) => {
 
 
 // Routes
+router.all('/login', requireAuthentication, loginHandler);
 router.get('/logout', logoutHandler);
-
 
 
 // Inline login middleware
 export async function requireAuthentication(req, res, next) {
+
     if (req.isAuthenticated()) {
         return next();
     };
 
     if (req.method === 'GET') {
-        return res.render('../../auth/assets/log_or_sign_in', { originalUrl: req.originalUrl });
+        const Referer = req.get('Referer');
+        const {originalUrl} = req;
+        const returnPath = (
+            originalUrl === '/login' ? `/login?referer=${encodeURIComponent(Referer || "")}`
+            : originalUrl
+        );
+        return res.render('../../auth/assets/log_or_sign_in', { returnPath });
     };
 
     // If POST and mode is signup, try signup
@@ -88,6 +95,12 @@ export async function requireAuthentication(req, res, next) {
     })(req, res, next);
 };
 
+// Login handler
+function loginHandler (req, res) {
+    // Just return to where we came from after requireAuthentication middleware
+    const backTo = req.query?.referer || '/';
+    res.redirect(backTo);
+};
 
 // Logout handler
 function logoutHandler (req, res) {
