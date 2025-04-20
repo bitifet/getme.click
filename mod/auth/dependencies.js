@@ -19,7 +19,7 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import {appRouter} from '../server/index.js';
+import {moduleRouter} from '../www/index.js';
 
-export {appRouter};
+export {moduleRouter};
 

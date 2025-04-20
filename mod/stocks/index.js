@@ -19,9 +19,9 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import { h_qr, requireAuthentication, appRouter } from './dependencies.js';
+import { h_qr, requireAuthentication, moduleRouter } from './dependencies.js';
 
-export const router = appRouter(import.meta.dirname);
+export const router = moduleRouter(import.meta.dirname);
 
 router.get('/:store/labels.pdf', h_qr);
 router.get('/:store/:uuid', requireAuthentication, h_item);

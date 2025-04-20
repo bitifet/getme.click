@@ -1,5 +1,5 @@
-// mod/server/defaults.js
-// ======================
+// mod/www/defaults.js
+// ===================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   

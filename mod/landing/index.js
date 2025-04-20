@@ -21,9 +21,9 @@
 
 import express from 'express';
 
-import {appRouter} from './dependencies.js';
+import {moduleRouter} from './dependencies.js';
 
-const router = appRouter(import.meta.dirname);
+const router = moduleRouter(import.meta.dirname);
 
 export {router};
 

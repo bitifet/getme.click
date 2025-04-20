@@ -1,5 +1,5 @@
-// mod/server/dependencies.js
-// ==========================
+// mod/www/dependencies.js
+// =======================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   

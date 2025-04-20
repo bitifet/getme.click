@@ -1,5 +1,5 @@
-// mod/server/index.js
-// ===================
+// mod/www/index.js
+// ================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   
@@ -23,6 +23,8 @@ import path from 'path';
 import express from 'express';
 import {authRouter} from './dependencies.js';
 import defaults from './defaults.js';
+import moduleRouter from './moduleRouter.js';
+import failbackRouter from './failbackRouter.js';
 
 const app = express();
 const mainRouter = express.Router();
@@ -33,6 +35,7 @@ app.use(applyAssetsPath);
 
 app.use(authRouter);
 app.use(mainRouter);
+app.use(failbackRouter);
 
 
 
@@ -44,23 +47,8 @@ app.listen(3000, () => {
 
 
 export { mainRouter as app };
+export { moduleRouter };
 
-export function appRouter(modulePath, options) {
-    if (!modulePath) {
-        throw new Error("Module path is required");
-    };
-
-    const assetsPath = modulePath + '/assets'; // Local assets path.
-
-    const router = express.Router();
-
-    // Supported kinds of assets:
-    router.use(setAssetsPath(assetsPath));  // Templates
-    router.use(express.static(assetsPath)); // Static files
-
-    return router;
-
-};
 
 
 
@@ -71,13 +59,6 @@ export function appRouter(modulePath, options) {
 
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
-
-function setAssetsPath(assetsPath) {
-    return function(req, res, next) {
-        res.assetsPath = assetsPath;
-        next();
-    };
-};
 
 function applyAssetsPath(req, res, next) {
     const render = res.render.bind(res);
