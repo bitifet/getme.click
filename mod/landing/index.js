@@ -29,7 +29,7 @@ export {router};
 
 const routes = [
     ['/', 'landing'],
-    ['/getting-started', 'getStarted'],
+    ['/about', 'about'],
 ]
 
 

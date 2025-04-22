@@ -31,6 +31,9 @@ html(lang="en")
           text-align: center;
           min-height: 100vh;
           overflow: auto;  /* Allow scrolling when content exceeds viewport */
+          width: 100%;
+          max-width: 1024px;
+          margin: 0 auto;
         }
 
         /* Sticky navbar */
@@ -43,13 +46,61 @@ html(lang="en")
           align-self: stretch;
           gap: 1rem;
         }
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 45%;
+            bottom: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            background-color: #e0e0e0;
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            z-index: -1;
+        }
+
+        .navbar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: -.5em;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            background-color: white;
+            box-shadow: 0 6px 6px white;
+            z-index: -2;
+        }
+
 
         .navbar a {
           background-color: #f5f5f5;
           padding: 0.5rem 1rem;
-          margin-bottom: 2rem;
           border-radius: 0.5rem;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+          text-decoration: none;
+          position: relative;
+          display: inline-block;
+        }
+
+        .navbar a::before {
+          content: '';
+          position: absolute;
+          top: 35%;
+          bottom: 35%;
+          left: -5px;
+          right: -5px;
+          background-color: white;
+          z-index: -1;
+        }
+
+        .navbar a:hover {
+          background-color: #e6f8f3;
+          transform: translate(3px, 3px);
+        }
+        .navbar a:hover::before {
+          position: relative;
+          transform: translate(-3px, -3px);
         }
 
         /* Spacer inside navbar to push login/logout to the right */
@@ -60,24 +111,28 @@ html(lang="en")
         /* Title row */
         .title-row {
           display: flex;
+          flex-direction: column;
+          justify-content: center;
           align-items: center;
           gap: 0.75rem;
           margin-bottom: 1rem;
+          flex: 1;
+          max-height: 25vh;
+          overflow: visible;
         }
-
-        .title-row a.icon-link {
-          text-decoration: none;
-          font-size: 1.5rem;
-          color: #00c896;
-          transition: transform 0.2s ease;
-        }
-
-        .title-row a.icon-link:hover {
-          transform: scale(1.2);
+        
+        .page-content {
+          flex: 1;
+          max-width: 100%;
+          margin: 2em 1em;
         }
 
         h1 {
           font-size: 3rem;
+        }
+        heading h1 {
+          font-size: 8vw;
+          font-weight: 500;
         }
 
         /* Optional: ensure block content doesn't squish */
@@ -88,20 +143,20 @@ html(lang="en")
 
 
   body
-    .title-row
-        a.icon-link(href="/getting-started", title="Getting Started") 🚀
+    heading.title-row
         h1 getme.click
-    block subtitle
+        block subtitle
     p.navbar
-      a(href='/') 🏠 Home
-      span.spacer
-      if (user === null)
-        /// Don't render log-in button
-      else if (user)
-        a(href='/logout') 🔒 Log out
-      else
-        a(href='/login') 🔑 Log in  
-      a(href='/about') ❓ About
+       a(href='/') 🏠 Home
+       span.spacer
+       if (user === null)
+           /// Don't render log-in button
+       else if (user)
+           a(href='/logout') 🔒 Log out
+       else
+           a(href='/login') 🔑 Log in  
+       a(href='/about') ❓ About
   
-    block content
+    div.page-content
+        block content
 
