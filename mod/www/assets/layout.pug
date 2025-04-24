@@ -155,6 +155,13 @@ html(lang="en")
             text-wrap: balance;
         }
 
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
   body
     heading.title-row
         h1 getme.click
@@ -177,3 +184,5 @@ html(lang="en")
     div.page-content
         block content
 
+    footer
+      | &copy; #{new Date().getFullYear()} getme.click

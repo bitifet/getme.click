@@ -1,9 +1,7 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Getting Started — getme.click
+extends /layout.pug
+
+block append styles
+    //-title Getting Started — getme.click
     style.
       * {
         box-sizing: border-box;
@@ -65,14 +63,7 @@ html(lang="en")
         background-color: #00a77c;
       }
 
-      footer {
-        margin-top: 4rem;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #aaa;
-      }
-
-  body
+block content
     header
       h1 Getting Started
       p.subtitle Your shortcut to simplicity starts here.
@@ -90,6 +81,4 @@ html(lang="en")
       h2 Step 3: Get Going
       p That’s it! You’re ready to start using getme.click to make life a little bit easier.
 
-    footer
-      | &copy; #{new Date().getFullYear()} getme.click
 
