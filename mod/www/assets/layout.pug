@@ -2,8 +2,7 @@ doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="viewport", content="initial-scale=1")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0 viewport-fit=cover")
     title #{title || "getme.click"}
     block styles
       style.
@@ -15,7 +14,6 @@ html(lang="en")
         }
 
         html, body {
-          min-height: 100%;
           font-family: 'Inter', sans-serif;
           background-color: #fff;
           color: #111;
@@ -28,10 +26,9 @@ html(lang="en")
           justify-content: center;  /* Vertically center content when no scroll */
           align-items: center;
           padding: 2rem;
-          text-align: center;
           min-height: 100vh;
           overflow: auto;  /* Allow scrolling when content exceeds viewport */
-          width: 100%;
+          width: 100vw;
           max-width: 1024px;
           margin: 0 auto;
         }
@@ -39,7 +36,11 @@ html(lang="en")
         /* Sticky navbar */
         .navbar {
           position: sticky;
+          will-change: transform;
           top: 0;
+          /* padding-top: calc(100vh - 100svh); */
+          padding-top: 2rem;
+          padding-bottom: 0px;
           z-index: 10;
           font-size: 1.25rem;
           display: flex;
@@ -49,8 +50,8 @@ html(lang="en")
         .navbar::before {
             content: '';
             position: absolute;
-            top: 45%;
-            bottom: 45%;
+            top: calc(45% + 1rem);
+            bottom: calc(45% - 1rem);;
             left: 50%;
             transform: translateX(-50%);
             width: 100vw;
@@ -62,13 +63,13 @@ html(lang="en")
         .navbar::after {
             content: '';
             position: absolute;
-            top: 0;
-            bottom: -.5em;
+            top: 1rem;
+            bottom: -.5rem;
             left: 50%;
             transform: translateX(-50%);
             width: 100vw;
             background-color: white;
-            box-shadow: 0 6px 6px white;
+            box-shadow: 0 3px 3px white;
             z-index: -2;
         }
 
@@ -79,6 +80,7 @@ html(lang="en")
           border-radius: 0.5rem;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
           text-decoration: none;
+          text-align: center;
           position: relative;
           display: inline-block;
         }
@@ -135,26 +137,41 @@ html(lang="en")
           font-weight: 500;
         }
 
-        /* Optional: ensure block content doesn't squish */
-        .block-content, .content, block {
-          width: 100%;
-          max-width: 800px;
+        /* Ensure block content doesn't squish */
+        .page-content {
+          align-self: normal;
         }
 
+
+        .subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            color: #555;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-wrap: balance;
+        }
 
   body
     heading.title-row
         h1 getme.click
-        block subtitle
+        p.subtitle
+            span —
+            block subtitle
+                span Because things should be easier
+            span —
     p.navbar
        a(href='/') 🏠 Home
        span.spacer
        if (user === null)
            /// Don't render log-in button
        else if (user)
-           a(href='/logout') 🔒 Log out
+           a(href='/logout') 🔒 Log&nbsp;out
        else
-           a(href='/login') 🔑 Log in  
+           a(href='/login') 🔑 Log&nbsp;in  
        a(href='/about') ❓ About
   
     div.page-content

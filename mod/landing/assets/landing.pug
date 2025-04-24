@@ -2,12 +2,6 @@ extends /layout.pug
 
 block append styles
     style.
-        .subtitle {
-            font-size: 1.25rem;
-            color: #555;
-            margin-bottom: 2.5rem;
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -32,12 +26,12 @@ block append styles
             transform: translateY(-3px);
         }
 
-block subtitle
-    p.subtitle — Because things should be easier —
-
 block content
     .grid
-        a(href="/stocks") 🛒 Manage Stocks
+        a(href="/bcard") 🪪 Business Cards
+        a(href="/calc") 🧮 Calculator
+        a(href="/stocks") 🛍️ Stock Management
+        a(href="/shopping") 🛒 Shopping List
         a(href="/tools/url-shortener") 🔗 URL Shortener
         a(href="/tools/text-cleaner") 🧹 Text Cleaner
         a(href="/tools/json-prettifier") 📄 JSON Prettifier

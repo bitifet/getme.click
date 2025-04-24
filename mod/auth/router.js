@@ -22,10 +22,11 @@
 
 import express from 'express';
 import passport from 'passport';
+import {URL} from 'url';
 
 import session from 'express-session';
 
-import {moduleRouter} from './dependencies.js';
+import {moduleRouter, Bool} from './dependencies.js';
 
 
 import {Strategy as LocalStrategy} from 'passport-local';
@@ -79,15 +80,48 @@ export async function requireAuthentication(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     };
+    const {originalUrl} = req;
+
+    let referer, allowDismiss;
+    if (req.method === 'GET') {
+        if (originalUrl.startsWith('/login')) {
+            if (req.query?.referer) { // Login retry
+                referer = req.query.referer;
+                allowDismiss = Bool(req.query.allowDismiss);
+            } else if (req.get('Referer')) { // Very first step
+                referer = req.get('Referer');
+                allowDismiss = true;
+            } else { // Direct access to /login
+                referer = "/";
+                allowDismiss = true;
+            };
+        } else { // Login is required to access current page
+            referer = originalUrl;
+            allowDismiss = false;
+        };
+    } else { // Remember values across the rest of the process
+        referer = req.query?.referer;
+        allowDismiss = Bool(req.query?.allowDismiss);
+    };
 
     if (req.method === 'GET') {
-        const Referer = req.get('Referer');
-        const {originalUrl} = req;
-        const returnPath = '/login?referer=' + encodeURIComponent(
-            originalUrl === '/login' ? (Referer || "")
-            : originalUrl
-        );
-        return res.render('../../auth/assets/log_or_sign_in', { returnPath });
+
+        // Build return path url:
+        const returnPath = new URL('/login', `${req.protocol}://${req.get('host')}`);
+
+        const isEnforcedLogin = ! originalUrl.startsWith('/login');
+
+        returnPath.search = (new URLSearchParams({
+            referer,
+            allowDismiss,
+        })).toString();
+
+        // Redirect to /login if not already there:
+        if (isEnforcedLogin) return res.redirect(returnPath);
+
+        // Render login page:
+        return res.render('log_or_sign_in', { returnPath, user: null });
+
     };
 
     // If POST and mode is signup, try signup
@@ -95,8 +129,9 @@ export async function requireAuthentication(req, res, next) {
         const { username, password, password_confirm } = req.body;
         try {
             await signup(username, password, password_confirm);
-        } catch (err) {
-            return res.status(401).send(`${err.message}. <a href="">Try again</a>`);
+        } catch (error) {
+            const dismissUrl = allowDismiss ? referer : "/";
+            return res.status(401).render('log_or_sign_in_error', {error, dismissUrl});
         }
     };
 
@@ -104,13 +139,15 @@ export async function requireAuthentication(req, res, next) {
     passport.authenticate('local', (err, user, info) => {
         if (err) return next(err);
         if (!user) {
-            return res.status(401).send('Login failed. <a href="">Try again</a>');
+            const error = {message: "Login failed"};
+            const dismissUrl = allowDismiss ? referer : "/";
+            return res.status(401).render('log_or_sign_in_error', {error, dismissUrl});
         }
 
         req.logIn(user, (err) => {
             if (err) return next(err);
             //return next(); // Auth success, continue
-            res.redirect(req.originalUrl); // Force GET method
+            res.redirect(originalUrl); // Force GET method
         });
     })(req, res, next);
 };

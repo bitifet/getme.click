@@ -20,6 +20,7 @@
 }}} */
 
 import {moduleRouter} from '../www/index.js';
+import {Bool} from '../../lib/helpers/types.js';
 
-export {moduleRouter};
+export {moduleRouter, Bool};
 
