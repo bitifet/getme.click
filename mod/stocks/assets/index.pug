@@ -1,9 +1,0 @@
-extends /layout.pug
-
-block append content
-    h1 Stocks lists
-    ul
-        each store in stores
-            li
-                a(href=`./${store}`) #{store}
-

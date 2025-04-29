@@ -1,5 +1,5 @@
-// mod/landing/index.js
-// ====================
+// mod/landing/router.js
+// =====================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   
@@ -19,7 +19,19 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import {router} from './router.js';
+import {moduleRouter} from './dependencies.js';
 
-export {router};
+export const router = moduleRouter(import.meta.dirname);
+
+const routes = [
+    ['/', 'landing'],
+    ['/about', 'about'],
+]
+
+routes.forEach(([path, view, locals = {}]) => {
+	router.get(path, (req, res) => {
+        const { user } = req;
+        res.render(view, {user, ...locals});
+    });
+});
 

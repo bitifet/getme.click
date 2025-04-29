@@ -6,7 +6,7 @@ import {randomUUID} from 'crypto';
 const users = [];
 
 export async function signup( username, password, password_confirm ) {
-  if (users.find(u => u.username === user)) throw new Error('User already exists');
+  if (users.find(u => u.username === username)) throw new Error('User already exists');
   if (password !== password_confirm) throw new Error('Password mismatch');
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = { id: randomUUID(), username, password: hashedPassword, provider: 'local' };
@@ -14,8 +14,8 @@ export async function signup( username, password, password_confirm ) {
   return user;
 };
 
-export async function authenticate(user, password) {
-    const foundUser = users.find(u => u.username === user);
+export async function authenticate(username, password) {
+    const foundUser = users.find(u => u.username === username);
     if (!foundUser) {
         return false;
     }

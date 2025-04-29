@@ -162,6 +162,18 @@ html(lang="en")
             color: #aaa;
         }
 
+        .navLinks li {
+            list-style: none;
+            margin: 0.5rem 0;
+            display: inline;
+        }
+
+        .navLinks li:not(:first-child)::before {
+            content: ' ➤ ';
+            display: inline;
+            color: mediumseagreen;
+        }
+
   body
     heading.title-row
         h1 getme.click
@@ -182,6 +194,13 @@ html(lang="en")
        a(href='/about') ❓ About
   
     div.page-content
+        if (navLinks && navLinks.length > 0)
+            ul.navLinks
+                each link in navLinks
+                    li: a(href=baseUrl + link.path) #{link.icon || ''} #{link.name}
+        block title
+            if (title)
+                h2=title
         block content
 
     footer

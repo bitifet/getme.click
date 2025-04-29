@@ -30,13 +30,17 @@ const app = express();
 const mainRouter = express.Router();
 
 app.set('view engine', 'pug')
-app.set('views', defaults.default_views_path);
+app.set('views', path.join(import.meta.dirname, defaults.assetsRelPath));
 app.use(applyAssetsPath);
+
+app.use((req, res, next) => {
+    next();
+    console.log(`[${req.method}] 👉 ${req.url}`);
+});
 
 app.use(authRouter);
 app.use(mainRouter);
 app.use(failbackRouter);
-
 
 
 
@@ -48,13 +52,6 @@ app.listen(3000, () => {
 
 export { mainRouter as app };
 export { moduleRouter };
-
-
-
-
-
-
-
 
 
 // -----------------------------------------------------------------------

@@ -1,0 +1,9 @@
+extends /layout.pug
+
+block append content
+    ul
+        each storage in storages
+            li
+                a(href=`./${storage}`) #{storage}
+    p: a(href=`./_all`) 👉 List all articles
+

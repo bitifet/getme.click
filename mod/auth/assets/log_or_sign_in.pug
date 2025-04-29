@@ -68,7 +68,6 @@ block append styles
       }
 
       button {
-        width: 100%;
         padding: 0.75rem;
         background-color: #00c896;
         color: white;
@@ -79,15 +78,28 @@ block append styles
         transition: background-color 0.2s ease;
       }
 
+      .loginform button {
+        width: 100%;
+      }
+
+
+      dialog#termsForm button {
+        margin: 2em;
+      }
+
       button:hover {
         background-color: #00a77c;
+      }
+
+      fieldset {
+        text-align: right;
       }
 
 
 block content
   .container
     .form-wrapper
-      form(method="post", action=returnPath)
+      form.loginform(method="post", action=returnPath)
         input(type="hidden", name="mode", value="login")
         h1 Login
         label User name:
@@ -96,7 +108,7 @@ block content
         input(type="password", name="password", placeholder="Password", required)
         button(type="submit") Login
 
-      form(method="post", action=returnPath)
+      form#signUpForm.loginform(method="post", action=returnPath)
         input(type="hidden", name="mode", value="signup")
         h1 Sign Up
         label User name:
@@ -105,5 +117,55 @@ block content
         input(type="password", name="password", placeholder="Create a password", required)
         label Confirm Password:
         input(type="password", name="password_confirm", placeholder="Confirm your password", required)
-        button(type="submit") Sign Up
+        button#signUpBtn(type="submit") Sign Up
+
+    dialog#termsForm
+        include terms_and_conditions.pug
+        fieldset
+            button#dismissBtn(type="button") Dismiss
+            button#acceptBtn(type="button") Accept
+
+    script.
+        const signUpForm = document.getElementById('signUpForm');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const dialog = document.getElementById('termsForm');
+        const confirmBtn = document.getElementById('acceptBtn');
+        const cancelBtn = document.getElementById('dismissBtn');
+
+
+        // Handle form submission
+
+
+        let termsAccepted = false;
+
+
+        function onSignupBtn (event) {
+          if (termsAccepted) return;
+          event.preventDefault();
+          dialog.showModal();
+        };
+        signUpForm.addEventListener('submit', onSignupBtn);
+
+
+        // Handle confirm button
+        confirmBtn.addEventListener('click', () => {
+          termsAccepted = true;
+          // Close the dialog
+          dialog.close();
+          signUpBtn.click();
+        });
+
+        // Handle cancel button
+        cancelBtn.addEventListener('click', () => {
+          // Close the dialog
+          dialog.close();
+        });
+
+
+
+
+
+
+
+
 

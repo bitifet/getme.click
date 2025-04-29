@@ -1,0 +1,9 @@
+extends /layout.pug
+
+block title
+    h2 Articles in #{storage}
+block append content
+    ul
+        each article in articles
+            li
+                a(href=`./${storageId}/${article}`) #{article}
