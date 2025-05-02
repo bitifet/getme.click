@@ -5,22 +5,15 @@ block append styles
 
     //- title Authentication — getme.click
     style.
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
 
       .container {
-
           display: flex;
           flex-direction: column;
           align-items: center;
           padding: 2rem;
-
       }
 
-      h1 {
+      h2 {
         font-size: 2rem;
         margin-top: 2rem;
         margin-bottom: 1rem;
@@ -44,7 +37,7 @@ block append styles
       }
 
       form {
-        background: #fafafa;
+        background: #eaeaea;
         padding: 1.5rem;
         border-radius: 0.5rem;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -83,17 +76,50 @@ block append styles
       }
 
 
-      dialog#termsForm button {
-        margin: 2em;
-      }
 
       button:hover {
         background-color: #00a77c;
       }
 
-      fieldset {
-        text-align: right;
+      dialog#termsDialog[open] {
+        padding: 0;
+        border-radius: 0.5rem;
+        border-color: darkgreen;
+        box-shadow: 12px 12px 8px gray;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
       }
+
+
+      dialog#termsDialog article {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding: 1rem;
+      }
+
+
+      article > * {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      dialog#termsDialog footer {
+        margin: 4px;
+        flex: 0 0 auto; /* Prevent footer from growing/shrinking */
+        height: 60px; /* Fixed height for footer */
+        display: flex; /* Align buttons horizontally */
+        align-items: center; /* Center buttons vertically */
+        justify-content: flex-end; /* Align buttons to the right */
+        padding: 0 1rem; /* Consistent padding */
+        border-top: 1px solid #ccc;
+        box-sizing: border-box; /* Ensure padding is included in height */
+
+        gap: 1rem;
+
+      }
+
 
 
 block content
@@ -101,7 +127,7 @@ block content
     .form-wrapper
       form.loginform(method="post", action=returnPath)
         input(type="hidden", name="mode", value="login")
-        h1 Login
+        h2 Login
         label User name:
         input(type="text", name="username", placeholder="Username", required)
         label Password:
@@ -110,7 +136,7 @@ block content
 
       form#signUpForm.loginform(method="post", action=returnPath)
         input(type="hidden", name="mode", value="signup")
-        h1 Sign Up
+        h2 Sign Up
         label User name:
         input(type="text", name="username", placeholder="Choose a username", required)
         label Password:
@@ -119,19 +145,22 @@ block content
         input(type="password", name="password_confirm", placeholder="Confirm your password", required)
         button#signUpBtn(type="submit") Sign Up
 
-    dialog#termsForm
-        include terms_and_conditions.pug
-        fieldset
+    dialog#termsDialog
+        article
+            p: strong Welcome to getme.click!
+            p To provide you with seamless access to your data across devices and to enable sharing with others, we ask you to review and accept our brief terms and conditions.
+            p Don’t worry — We’ve kept them short, simple and straightforward so you can get started quickly!
+            include terms_and_conditions.pug
+        footer
             button#dismissBtn(type="button") Dismiss
             button#acceptBtn(type="button") Accept
 
     script.
         const signUpForm = document.getElementById('signUpForm');
         const signUpBtn = document.getElementById('signUpBtn');
-        const dialog = document.getElementById('termsForm');
+        const dialog = document.getElementById('termsDialog');
         const confirmBtn = document.getElementById('acceptBtn');
         const cancelBtn = document.getElementById('dismissBtn');
-
 
         // Handle form submission
 
