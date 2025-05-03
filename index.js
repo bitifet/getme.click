@@ -19,7 +19,7 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import {app} from './mod/www/index.js';
+import {app} from './core/www/index.js';
 import {router as landingRouter} from './mod/landing/index.js';
 import {router as stocksRouter} from './mod/stocks/index.js';
 

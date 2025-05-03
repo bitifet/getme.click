@@ -1,5 +1,5 @@
-// mod/www/index.js
-// ================
+// mod/www/app.js
+// ==============
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   
@@ -23,7 +23,6 @@ import path from 'path';
 import express from 'express';
 import {authRouter} from './dependencies.js';
 import defaults from './defaults.js';
-import moduleRouter from './moduleRouter.js';
 import failbackRouter from './failbackRouter.js';
 
 const app = express();
@@ -43,16 +42,11 @@ app.use(mainRouter);
 app.use(failbackRouter);
 
 
-
 app.listen(3000, () => {
     console.log('Server running on port 3000');
 });
 
-
-
-export { mainRouter as app };
-export { moduleRouter };
-
+export { mainRouter };
 
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------

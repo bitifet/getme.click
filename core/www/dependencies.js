@@ -1,4 +1,4 @@
-// mod/auth/dependencies.js
+// core/www/dependencies.js
 // ========================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
@@ -19,8 +19,7 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import {moduleRouter} from '../www/index.js';
-import {Bool} from '../../lib/helpers/types.js';
+import {router as authRouter} from '../auth/index.js';
 
-export {moduleRouter, Bool};
+export {authRouter};
 

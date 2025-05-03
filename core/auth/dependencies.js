@@ -1,5 +1,5 @@
-// mod/stocks/dependencies.js
-// ==========================
+// core/auth/dependencies.js
+// =========================
 
 /*  Copyright © 2025  Joan Miquel Torres Rigo  {{{
   
@@ -19,12 +19,8 @@
     along with getme.click website.  If not, see <https://www.gnu.org/licenses/>.
 }}} */
 
-import h_qr from '../../lib/handlers/qrLabels/index.js';
-import {requireAuthentication} from '../../core/auth/index.js';
-import {moduleRouter} from "../../core/www/index.js";
+import {moduleRouter} from '../www/index.js';
+import {Bool} from '../../lib/helpers/types.js';
 
-export {
-    h_qr,
-    requireAuthentication,
-    moduleRouter,
-};
+export {moduleRouter, Bool};
+
